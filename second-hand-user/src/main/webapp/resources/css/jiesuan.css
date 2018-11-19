@@ -1,0 +1,106 @@
+.table {
+	width: 1105px;
+	text-align: center;
+	margin: 0 auto;
+}
+.table th,td{
+	vertical-align:middle!important;
+	text-align: center;
+}
+.table tr td:nth-child(1){
+	text-align: left;
+}
+.table tr td:nth-child(1) a {
+	color: black;
+	margin-left: 10px;
+}
+.table a {
+	color: black;
+}
+.table a:hover {
+	text-decoration: underline;	
+}
+.table span {
+	margin-left: 20px;
+}
+.down {
+	width: 1105px;
+	height: 70px;
+	margin: 0 auto;
+	margin-top: 10px;
+}
+.down a {
+	display: block;
+	color: black;
+}
+.down a:hover {
+	text-decoration: underline;
+}
+.down-right {
+	float: right;
+	margin-bottom: 100px;
+}
+.down-left {
+	font-size: 20px;
+	float: right;
+}
+.down-right a {
+	width: 120px;
+	height: 60px;
+	background-color: orange;
+	line-height: 60px;
+	border-radius: 10px;
+	font-size: 20px;
+	text-align: center;
+}
+.down-right a:hover {
+	text-decoration: none;
+	background-color: #f97133;
+}
+.message {
+	width: 1105px;
+	height: 200px;
+	margin: 0 auto;
+	margin-top: 100px;
+}
+.address {
+	font-size: 18px;
+	font-weight: 500;
+	height: 50px;
+	margin-bottom: 15px;
+	line-height: 50px;
+}
+.address input {
+	margin-left: 20px;
+	border: 1px solid black;
+	width: 700px;
+	height: 45px;
+	border-radius: 0px;
+}
+.phone {
+	font-size: 18px;
+	font-weight: 500;
+	height: 50px;
+	margin-bottom: 15px;
+	line-height: 50px;
+}
+.phone input {
+	margin-left: 37px;
+	height: 45px;
+	width: 240px;
+	border-radius: 0px;
+	outline: none;
+}
+.linker {
+	font-size: 18px;
+	font-weight: 500;
+	height: 50px;
+	line-height: 50px;
+}
+.linker input {
+	margin-left: 37px;
+	border: 1px solid black;
+	width: 150px;
+	height: 45px;
+	border-radius: 0px;
+}

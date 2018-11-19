@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secondhand.user.dao.FirstCategoryDao">
+	<resultMap type="firstCategory" id="categoryMap">
+		<id column="fcid" property="fcid"/>
+		<result column="fcname" property="fcname"/>
+		<collection property="SClist" ofType="secondCategory">
+			<id column="scid" property="scid"/>
+			<result column="scname" property="scname"/>
+			<result column="fcid" property="fcid"/>
+		</collection>
+		<collection property="plist" ofType="product">
+			<id column="pid" property="pid"/>
+			<result column="pname" property="pname"/>
+			<result column="price" property="price"/>
+			<result column="apicname" property="apicname"/>
+		</collection>
+	</resultMap>
+	<select id="findAllCategory" resultMap="categoryMap">
+		select fc.fcid,fc.fcname,sc.scid,sc.scname,p.pid,p.pname,p.price,p.apicname from first_category fc,second_category sc,((select fcid,scid,pid,pname,price,apicname from product where fcid=1 limit 0,8) union 
+		(select fcid,scid,pid,pname,price,apicname from product where fcid=2 limit 0,8) union 
+		(select fcid,scid,pid,pname,price,apicname from product where fcid=3 limit 0,8) union 
+		(select fcid,scid,pid,pname,price,apicname from product where fcid=4 limit 0,8)) p where fc.fcid=sc.fcid and fc.fcid=p.fcid	
+	</select>
+</mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.secondhand.user.dao.ItemDao">
+    	<resultMap type="item" id="itemsResultMap">
+    		<id column="iid" property="iid"/>
+    		<result column="subtotal" property="subtotal"/>
+    		<result column="count" property="count"/>
+    		<association property="product" javaType="product">
+    			<id column="pid" property="pid"/>
+    			<result column="pname" property="pname"/>
+    			<result column="price" property="price"/>
+    			<result column="apicname" property="apicname"/>
+    			<result column="sid" property="sid"/>
+    		</association>
+    	</resultMap>
+    	<insert id="addItem" parameterType="item">
+    		insert into item (iid,subtotal,count,pid) values(#{iid},#{subtotal},#{count},#{pid})
+    	</insert>
+    	
+    	<select id="findItemsByUid" resultMap="itemsResultMap">
+    		select i.iid,i.subtotal,i.count,p.pid,p.pname,p.price,p.apicname from product p,item i,buycar bc where bc.uid=#{uid} and bc.iid=i.iid and i.pid=p.pid; 
+    	</select>
+    	
+    	<delete id="deleteItem">
+    		delete from item where iid=#{iid}
+    	</delete>
+    	
+    	<delete id="deleteItems" parameterType="String">
+    		delete from item where iid in 
+    		<foreach item="iid" collection="array" open="(" separator="," close=")">
+    			#{iid}
+    		</foreach>
+    	</delete>
+    	
+    	<select id="findItemsByIids" resultMap="itemsResultMap">
+    		select i.iid,i.subtotal,i.count,p.pid,p.pname,p.price,p.apicname,p.sid from product p,item i where i.iid in 
+    		<foreach collection="array" item="iid" open="(" separator="," close=")">
+    			#{iid}
+    		</foreach> 
+    		and i.pid=p.pid
+    	</select>
+    	
+    	<select id="total" resultType="java.lang.Double">
+    		select sum(subtotal) from item where iid in 
+    		<foreach collection="array" item="iid" open="(" separator="," close=")">
+    			#{iid}
+    		</foreach>
+    	</select>
+    	
+    	<select id="findItemProductStrock" resultType="productStockDto">
+    		 select 
+    		 	i.pid pid,p.pname pname,sum(i.count) count,p.stock stock 
+    		 from 
+    		 	item i,product p 
+    		 where 
+    		 	i.iid 
+    		 in 
+    		 	<foreach collection="array" item="iid" open="(" separator="," close=")">
+    				#{iid}
+    			</foreach> 
+    		 and 
+    			i.pid = p.pid
+    		 group by 
+    		 	pid;
+    	</select>
+    </mapper>

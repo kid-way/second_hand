@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secondhand.user.dao.OrderDao">
+	<resultMap type="orders" id="orderMap">
+		<id column="oid" property="oid"/>
+		<result column="create_time" property="createTime"/>
+		<result column="total" property="total"/>
+		<result column="ostate" property="state"/>
+		<result column="uid" property="uid"/>
+		<result column="rname" property="rname"/>
+		<result column="rphone" property="rphone"/>
+		<result column="raddress" property="raddress"/>
+		<collection property="list" ofType="smOrder">
+			<id column="soid" property="soid"/>
+			<result column="sostate" property="state"/>
+			<result column="create_time" property="createTime"/>
+			<association property="item" javaType="item">
+				<id column="iid" property="iid"/>
+				<result column="subtotal" property="subtotal"/>
+				<result column="count" property="count"/>
+				<association property="product" javaType="product">
+					<id column="pid" property="pid"/>
+					<result column="pname" property="pname"/>
+					<result column="apicname" property="apicname"/>
+					<result column="price" property="price"/>
+					<association property="seller" javaType="seller">
+						<id column="sid" property="sid"/>
+						<result column="sname" property="sname"/>
+						<result column="sphone" property="sphone"/>
+						<result column="address" property="address"/>
+					</association>
+				</association>
+			</association>
+		</collection>
+	</resultMap>
+	
+	<insert id="addOrder" parameterType="orders">
+		insert into orders(oid,uid,create_time,total,state,rname,rphone,raddress) values(#{oid},#{uid},#{createTime},#{total},#{state},#{rname},#{rphone},#{raddress})
+	</insert>
+	
+	<update id="changeOrderState">
+		update orders set state = #{state} where oid = #{oid}
+	</update>
+	
+	<select id="findAllOrders" resultType="orders">
+		select oid,create_time,total,state from orders where uid = #{uid} order by create_time desc
+	</select>
+	
+	<select id="findOrdersByState" resultType="orders">
+		select oid,create_time,total,state from orders where uid = #{uid} and state = #{state} order by create_time desc
+	</select>
+	
+	<delete id="deleteOrder">
+		delete from orders where oid = #{oid}
+	</delete>
+	
+	<select id="findOrderByOid" resultMap="orderMap">
+		select o.oid,o.create_time,o.total,o.state ostate,o.rname,o.rphone,o.raddress,
+			so.soid,so.state sostate,so.create_time,
+			i.iid,i.subtotal,i.count,
+			p.pid,p.pname,p.apicname,p.price,
+			s.sid,s.sname,s.sphone,s.address 
+		from 
+			orders o,sm_order so,item i,product p,seller s 
+		where 
+			o.oid=#{oid} 
+		and 
+			o.oid = so.oid 
+		and 
+			so.iid = i.iid 
+		and 
+			i.pid = p.pid 
+		and 
+			p.sid = s.sid
+	</select>
+	
+	<select id="findProductsByState" resultType="product">
+		select 
+			p.pid,p.pname,p.apicname,p.price 
+		from 
+			orders o,sm_order so,item i,product p 
+		where 
+			o.uid=#{uid} 
+		and 
+			o.oid = so.oid 
+		and 
+			so.state=#{state} 
+		and 
+			so.iid = i.iid 
+		and 
+			i.pid = p.pid
+	</select>
+	
+	<select id="getProductStockDto" resultType="productStockDto">
+		select 
+			p.pid pid,p.pname pname,sum(i.count) count,p.stock stock 
+		from 
+			orders o,sm_order so,item i,product p 
+		where 
+			o.oid = #{oid} 
+		and
+			o.oid = so.oid 
+		and 
+			so.iid = i.iid 
+		and 
+			i.pid = p.pid 
+		group by 
+			pid;
+	</select>
+</mapper>

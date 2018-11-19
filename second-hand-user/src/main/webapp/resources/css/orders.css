@@ -1,0 +1,31 @@
+.order {
+	width: 1150px;
+	margin: 0 auto;
+	margin-top: 100px;
+}
+.order-head {
+	height: 60px;
+	background-color: black;
+	margin-bottom: 20px;
+	line-height: 60px;
+	color: #fff;
+	font-size: 17px;
+}
+.order-head span {
+	padding-left: 20px;
+}
+th {
+	text-align: center;
+}
+td {
+	text-align: center;
+	vertical-align: middle!important;
+}
+table a {
+	font-size: 15px;
+	color: black;
+}
+table a:hover {
+	color: black;
+	text-decoration: underline;
+}

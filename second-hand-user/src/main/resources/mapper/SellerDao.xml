@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secondhand.user.dao.SellerDao">
+	<select id="findSellerBySname" resultType="seller">
+		select * from seller where sname = #{sname}
+	</select>
+	
+	<insert id="addSeller" parameterType="seller">
+		insert into seller(sname,password,sphone,gender,age,address) values(#{sname},#{password},#{sphone},#{gender},#{age},#{address})
+	</insert>
+	
+	<select id="findSellerBySphone" resultType="seller">
+		select * from seller where sphone = #{sphone}
+	</select>
+	
+	<select id="findSellerBySid" resultType="seller">
+		select * from seller where sid = #{sid}
+	</select>
+	
+	<update id="update" parameterType="seller">
+		update seller set sname = #{sname},sphone = #{sphone},age = #{age},address = #{address},gender = #{gender},password = #{password} where sid = #{sid}
+	</update>
+</mapper>

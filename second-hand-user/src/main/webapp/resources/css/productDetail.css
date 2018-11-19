@@ -1,0 +1,21 @@
+.productTable {
+	width: 500px;
+	margin: 0 auto;
+	margin-top: 100px;
+}
+table input[type=text] {
+	width: 200px;
+	border: 1px solid gray;
+	border-radius: 0;
+	height: 30px;
+}
+table a {
+	display: block;
+	width: 65px;
+	height: 50px;
+	float: right;
+	line-height: 40px!important;
+}
+select {
+	width: 100px;
+}

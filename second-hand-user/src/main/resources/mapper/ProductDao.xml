@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secondhand.user.dao.ProductDao">
+	<resultMap type="product" id="productResultMap">
+		<id column="pid" property="pid"/>
+		<result column="pname" property="pname"/>
+		<result column="apicname" property="apicname"/>
+		<result column="bpicname" property="bpicname"/>
+		<result column="price" property="price"/>
+		<result column="stock" property="stock"/>
+		<result column="sid" property="sid"/>
+		<result column="fcid" property="fcid"/>
+		<result column="scid" property="scid"/>
+		<association property="seller" javaType="seller">
+			<id column="sid" property="sid"/>
+			<result column="sname" property="sname"/>
+			<result column="sphone" property="sphone"/>
+			<result column="address" property="address"/>
+		</association>
+		<association property="firstCategory" javaType="firstCategory">
+			<id column="fcid" property="fcid"/>
+			<result column="fcname" property="fcname"/>
+		</association>
+		<association property="secondCategory" javaType="secondCategory">
+			<id column="scid" property="scid"/>
+			<result column="scname" property="scname"/>
+		</association>
+	</resultMap>
+	
+	<resultMap type="productDto" id="findProductsByScidMap">
+		<result column="scid" property="scid"/>
+		<result column="fcname" property="fcname"/>
+		<result column="scname" property="scname"/>
+		<collection property="pList" ofType="product">
+			<id column="pid" property="pid"/>
+			<result column="pname" property="pname"/>
+			<result column="price" property="price"/>
+			<result column="apicname" property="apicname"/>
+		</collection>
+	</resultMap>
+	
+	<select id="findProductsBySid" resultType="product">
+		select 
+			pid,pname,apicname,price
+		from 
+			product 
+		where 
+			sid=#{sid} and undercarriage=0 limit #{start},#{pieces}
+	</select>
+	<select id="findAllProducts" resultType="product">
+		select 
+			* 
+		from 
+			product
+	</select>
+	<select id="findProductsByFcid" resultType="product">
+		select 
+			*
+		from 
+			product 
+		where 
+			fcid=#{fcid}
+	</select>
+	<select id="findProductsByScid" resultMap="findProductsByScidMap">
+		select 
+			p.pid,p.pname,p.apicname,p.price,fc.fcname,sc.scid,sc.scname 
+		from 
+			product p,first_category fc,second_category sc 
+		where 
+			p.undercarriage=0 and p.scid=#{scid} and p.scid=sc.scid and sc.fcid=fc.fcid limit #{start},#{pieces}
+	</select>
+	<select id="findProductByPid" resultMap="productResultMap">
+		select 
+			p.pid,p.pname,p.apicname,p.bpicname,p.price,p.stock,p.sid,p.fcid,p.scid,
+			s.sid,s.sname,s.sphone,s.address,fc.fcid,fc.fcname,sc.scid,sc.scname
+		from 
+			product p,seller s,first_category fc,second_category sc
+		where 
+			p.pid=#{pid} and p.sid=s.sid and p.fcid = fc.fcid and p.scid = sc.scid
+	</select>
+	<select id="findProductsLikePname" resultType="product">
+		select 
+		* 
+		from product 
+		where undercarriage = 0 and pname like concat(concat('%',#{pname}),'%') limit #{start},#{pieces}
+	</select>
+	<update id="updateProduct" parameterType="product">
+		update 
+			product 
+		set 
+			pname=#{pname},apicname=#{apicname},bpicname=#{bpicname},
+			price=#{price},stock=#{stock},sid=#{sid},scid=#{scid},fcid=#{fcid} 
+		where 
+			pid=#{pid}
+	</update>
+	
+	<select id="scProductCount" resultType="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			product 
+		where 
+			undercarriage=0 and scid=#{scid}
+	</select>
+	
+	<select id="nameLikeProductCount" resultType="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			product 
+		where 
+			undercarriage=0 and pname like concat(concat('%',#{pname}),'%')
+	</select>
+	
+	<select id="countProductsBySid" resultType="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			product 
+		where 
+			undercarriage=0 and sid = #{sid}
+	</select>
+	
+	<select id="nameLikeProductCountBySid" resultType="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			product 
+		where 
+			undercarriage = 0 
+		and 
+			sid = #{sid} 
+		and 
+			pname like concat(concat('%',#{pname}),'%')
+	</select>
+	
+	<select id="nameLikeProductBySid" resultType="product">
+		select 
+			pid,pname,apicname,price
+		from 
+			product 
+		where 
+			undercarriage = 0 
+		and 
+			sid = #{sid} 
+		and 
+			pname like concat(concat('%',#{pname}),'%') limit #{start},#{pieces}
+	</select>
+	
+	<insert id="addProduct">
+		insert into product(pname,price,stock,apicname,sid,fcid,scid) values(#{pname},#{price},#{stock},#{apicname},#{sid},#{fcid},#{scid})
+	</insert>
+	
+	<update id="deleteProduct">
+		update product set undercarriage=1 and stock = 0 where pid = #{pid}
+	</update>
+	
+	<update id="updateStock">
+		update product set stock = (stock + #{count}) where pid = #{pid}
+	</update>
+	
+	
+</mapper>

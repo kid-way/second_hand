@@ -1,0 +1,58 @@
+.table {
+	width: 1105px;
+	text-align: center;
+	margin: 0 auto;
+	margin-top: 100px;
+}
+.table th,td{
+	vertical-align:middle!important;
+	text-align: center;
+}
+.table tr td:nth-child(2){
+	text-align: left;
+}
+.table tr td:nth-child(2) a {
+	color: black;
+	margin-left: 10px;
+}
+.table a {
+	color: black;
+}
+.table a:hover {
+	text-decoration: underline;	
+}
+.table span {
+	margin-left: 20px;
+}
+.down {
+	width: 1105px;
+	height: 70px;
+	margin: 0 auto;
+	margin-top: 10px;
+}
+.down a {
+	display: block;
+	color: black;
+}
+.down a:hover {
+	text-decoration: underline;
+}
+.down-left {
+	float: left;
+}
+.down-right {
+	float: right;
+}
+.down-right a {
+	width: 120px;
+	height: 60px;
+	background-color: orange;
+	line-height: 60px;
+	border-radius: 10px;
+	font-size: 20px;
+	text-align: center;
+}
+.down-right a:hover {
+	text-decoration: none;
+	background-color: #f97133;
+}

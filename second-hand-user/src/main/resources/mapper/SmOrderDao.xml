@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secondhand.user.dao.SmOrderDao">
+	<resultMap type="smOrder" id="smOrderMap">
+		<id column="soid" property="soid"/>
+		<result column="state" property="state"/>
+		<result column="create_time" property="createTime"/>
+		<association property="item" javaType="item">
+			<id column="iid" property="iid"/>
+			<result column="count" property="count"/>
+			<association property="product" javaType="product">
+				<id column="pid" property="pid"/>
+				<result column="apicname" property="apicname"/>
+				<result column="pname" property="pname"/>
+			</association>
+		</association>
+		<association property="order" javaType="orders">
+			<id column="oid" property="oid"/>
+			<association property="user" javaType="user">
+				<id column="uid" property="uid"/>
+				<result column="username" property="username"/>
+			</association>
+		</association>
+	</resultMap>
+	
+	<insert id="addSmOrders">
+		insert into sm_order (soid,iid,state,create_time,oid,raddress,rphone,rname) values 
+		<foreach collection="list" item="smOrder" separator=",">
+			(#{smOrder.soid},#{smOrder.iid},#{smOrder.state},#{smOrder.createTime},#{smOrder.oid},#{smOrder.raddress},#{smOrder.rphone},#{smOrder.rname})
+		</foreach>
+	</insert>
+	
+	<update id="changeStateByOid">
+		update sm_order set state = #{state} where oid = #{oid}
+	</update>
+	
+	<delete id="deleteSmOrders">
+		delete from sm_order where oid = #{oid}
+	</delete>
+	
+	<update id="changeStateBySoid">
+		update sm_order set state = #{state} where soid = #{soid}
+	</update>
+	
+	<select id="findSmOrdersBySid" resultMap="smOrderMap">
+		select 
+			so.create_time,so.soid,p.apicname,p.pname,i.count,u.username,so.state 
+		from 
+			sm_order so,item i,product p,orders o,user u 
+		where 
+			so.oid = o.oid 
+		and 
+			o.uid = u.uid 
+		and 
+			so.iid = i.iid 
+		and 
+			i.pid = p.pid 
+		and 
+			p.sid = #{sid}
+		order by 
+			create_time desc; 
+	</select>
+	
+	<select id="findSmOrdersByState" resultMap="smOrderMap">
+		select 
+			so.create_time,so.soid,p.apicname,p.pname,i.count,u.username,so.state 
+		from 
+			sm_order so,item i,product p,orders o,user u 
+		where 
+			so.oid = o.oid 
+		and 
+			o.uid = u.uid 
+		and 
+			so.iid = i.iid 
+		and 
+			i.pid = p.pid 
+		and 
+			p.sid = #{sid} 
+		and 
+			so.state = #{state}
+		order by 
+			create_time desc; 
+	</select>
+</mapper>

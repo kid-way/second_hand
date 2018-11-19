@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.secondhand.user.dao.BuycarDao">
+    	<insert id="add" parameterType="buycar">
+    		insert into buycar(iid,uid) values(#{iid},#{uid})
+    	</insert>
+    	
+    	<delete id="delete" parameterType="String">
+    		delete from buycar where iid in 
+    		<foreach item="iid" collection="array" open="(" separator="," close=")">
+    			#{iid}
+    		</foreach>
+    	</delete>
+    	
+    	<delete id="deleteItem">
+    		delete from buycar where iid=#{iid}
+    	</delete>
+    	
+    	<select id="countFromBuycar" resultType="java.lang.Integer">
+    		SELECT 
+    			sum(i.count) 
+    		FROM 
+    			buycar bc,item i 
+    		WHERE 
+    			bc.uid = #{uid} 
+    		AND 
+    			i.pid = #{pid} 
+    		AND 
+    			i.iid = bc.iid
+    	</select>
+    </mapper>

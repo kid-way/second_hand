@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>index</title>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../resources/css/index.css">
+</head>
+<body>
+	<div class="head">
+		<div class="head-content">
+			<div class="head-left">
+				<a href="#">首页</a>
+			</div>
+			<div class="head-search">
+				<form action="">
+					<input type="text" name="pname" placeholder="输入搜索关键词">
+					<span>
+					<input type="submit" class="btn btn-default" value="搜索">
+					</span>
+				</form>
+			</div>
+			<div class="head-mid">
+				<a href="#">购物车</a>
+			</div>
+			<div class="head-right">
+				<a href="#">已购买</a>
+			</div>
+			<div class="head-last">
+				<a href="#">我的订单</a>
+			</div>
+			<div class="head-lasts">
+				<a href="#">登录</a>/<a href="#">注册</a>
+			</div>
+		</div>
+	</div>
+	<div class="nav">
+		<div class="nav-left">
+			<div class="menu">
+				<div class="menu-head">服装</div>
+				<div class="menu-body">
+					<ul>
+						<li><a href="#">女装</a></li>
+						<li><a href="#">女鞋</a></li>
+						<li><a href="#">箱包</a></li>
+						<li><a href="#">配饰</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="menu">
+				<div class="menu-head">
+						数码产品
+				</div>
+				<div class="menu-body">
+					<ul>
+						<li><a href="#">手机</a></li>
+						<li><a href="#">相机</a></li>
+						<li><a href="#">笔记本</a></li>
+						<li><a href="#">平板</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="menu">
+				<div class="menu-head">
+					影音家电
+				</div>
+				<div class="menu-body">
+					<ul>
+						<li><a href="#">大家电</a></li>
+						<li><a href="#">小家电</a></li>
+						<li><a href="#">料理机</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="menu">
+				<div class="menu-head">
+					闲置母婴
+				</div>
+				<div class="menu-body">
+					<ul>
+						<li><a href="#">童装</a></li>
+						<li><a href="#">宝宝用具</a></li>
+						<li><a href="#">玩具</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="nav-mid" id="myCarousel">
+			<div id="carousel-example-generic" class="carousel slide">
+				<ol class="carousel-indicators radiou">
+					<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+					<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+					<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+					<li data-target="#carousel-example-generic" data-slide-to="3"></li>
+				</ol>
+				<div class="carousel-inner">
+					<div class="item active">
+						<a href="#"><img src="../resources/images/nvzhuang1.jpg" alt=""></a>
+					</div>
+					<div class="item">
+						<a href="#"><img src="../resources/images/xiangji.jpg" alt=""></a>
+					</div>
+					<div class="item">
+						<a href="#"><img src="../resources/images/dianshi.jpg" alt=""></a>
+					</div>
+					<div class="item">
+						<a href="#"><img src="../resources/images/wanju.jpg" alt=""></a>
+					</div>
+				</div>
+				<a href="#carousel-example-generic" data-slide="prev" class="left carousel-control">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+				</a>
+				<!-- 轮播图上的向后一图切换链接 -->
+				<a href="#carousel-example-generic" data-slide="next" class="right carousel-control">
+					<span class="glyphicon glyphicon-chevron-right"></span>
+				</a>
+			</div>
+		</div>
+		<div class="nav-right">
+			<div class="up">
+				<a href="#">发布闲置</a>
+			</div>
+			<div class="down">
+				<a href="#">我的闲置</a>
+			</div>
+		</div>
+	</div>
+	<div class="category">
+		<div class="category-up"></div>
+		<div class="category-down">
+			<div class="category-left"></div>
+			<div class="category-right"></div>
+		</div>
+	</div>
+	<div class="category">
+		<div class="category-up"></div>
+		<div class="category-down">
+			<div class="category-left"></div>
+			<div class="category-right"></div>
+		</div>
+	</div>
+	<div class="category">
+		<div class="category-up"></div>
+		<div class="category-down">
+			<div class="category-left"></div>
+			<div class="category-right"></div>
+		</div>
+	</div>
+	<div class="buttom">
+			
+	</div>
+	<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+			$(".carousel").carousel({
+			interval:2000 //每隔两秒自动轮播
+		})
+	</script>
+</body>
+</html>
