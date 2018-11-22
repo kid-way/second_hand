@@ -58,7 +58,9 @@
 		and 
 			i.pid = p.pid 
 		and 
-			p.sid = #{sid}
+			p.sid = #{sid} 
+		and 
+			so.state not in (-1,0) 
 		order by 
 			create_time desc; 
 	</select>
@@ -82,5 +84,14 @@
 			so.state = #{state}
 		order by 
 			create_time desc; 
+	</select>
+	
+	<select id="findReceiverBySoid" resultType="receiver">
+		select 
+			rname,raddress,rphone 
+		from 
+			sm_order 
+		where 
+			soid = #{soid}
 	</select>
 </mapper>

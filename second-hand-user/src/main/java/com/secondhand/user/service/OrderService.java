@@ -89,4 +89,6 @@ public interface OrderService {
 	 * @param state
 	 */
 	public void updateSmOrderState(String soid, Integer state);
+
+	public Receiver findReceiverBySoid(String soid);
 }	

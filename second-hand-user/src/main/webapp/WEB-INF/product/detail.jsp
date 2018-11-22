@@ -21,6 +21,7 @@
 				<div class="up">
 					<ul>
 						<li><input type="hidden" name="pid" value="${product.pid }"><li>
+						<li><input type="hidden" name="price" value="${product.price }"><li>
 						<li><strong>商品名称:</strong><span>${product.pname }</span></li>
 						<li><strong>价格:</strong><span><small>￥</small>${product.price }</span></li>
 						<li><strong>仅剩:</strong><span>${product.stock }</span></li>

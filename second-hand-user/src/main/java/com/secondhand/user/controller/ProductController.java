@@ -27,6 +27,11 @@ import com.secondhand.user.service.BuycarService;
 import com.secondhand.user.service.CategoryService;
 import com.secondhand.user.service.ProductService;
 
+/**
+ * 商品controller
+ * @author Administrator
+ *
+ */
 @Controller
 public class ProductController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -75,7 +80,12 @@ public class ProductController {
 //		model.addAttribute("product", product);
 //		return "product/detail";
 //	}
-	
+	/**
+	 * 根据商品id查询商品详细信息,先判断用户是否登录，购物车中是否有该商品，如果有就要商品库存量-购物车中商品数量来显示商品剩余，没有就直接显示商品库存量
+	 * @param pid
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/{pid}/detailProduct")
 	public String detail(@PathVariable("pid") Integer pid,HttpServletRequest request){
 		HttpSession session = request.getSession();
@@ -105,6 +115,7 @@ public class ProductController {
 		}
 	}
 	
+	//根据关键字模糊查询商品列表(通过搜索框搜索)
 	@RequestMapping(value="/{page}/nameLikeProducts",method=RequestMethod.POST)
 	public String nameLikeProducts(@PathVariable("page")Integer page,String pname,Model model){
 		int pieces = 10;
@@ -116,6 +127,7 @@ public class ProductController {
 		return "product/pnameList";
 	}
 	
+	//根据关键字模糊查询商品列表(分页查询)
 	@RequestMapping(value="/{page}/{pname}/nameLikeProducts")
 	public String nameLikeProductsPage(@PathVariable("page")Integer page,@PathVariable("pname") String pname,Model model){
 		int pieces = 10;
@@ -134,6 +146,7 @@ public class ProductController {
 //		return "product/detail";
 //	}
 	
+	//卖者模糊查询自己的闲置(通过搜索框)
 	@RequestMapping(value="/{page}/nameLikeProductsBySid")
 	public String nameLikeProductsBySid(@PathVariable("page") Integer page, String pname, HttpServletRequest request){
 		Seller seller = (Seller)request.getSession().getAttribute("seller");
@@ -146,6 +159,7 @@ public class ProductController {
 		
 	}
 	
+	//卖者模糊查询自己的闲置(通过分页)
 	@RequestMapping(value="/{page}/{pname}/nameLikeProductsBySid")
 	public String nameLikeProductsBySidPage(@PathVariable("page") Integer page, @PathVariable("pname")String pname, HttpServletRequest request){
 		Seller seller = (Seller)request.getSession().getAttribute("seller");
@@ -158,6 +172,7 @@ public class ProductController {
 		
 	}
 	
+	//前往更新商品信息页面，将商品信息回显在表单上
 	@RequestMapping(value="/{pid}/toUpdateProduct")
 	public String toUpdateProduct(@PathVariable("pid") Integer pid,Model model){
 		Product product = productService.toUpdateProduct(pid);
@@ -170,6 +185,7 @@ public class ProductController {
 		return "seller/productDetail";
 	}
 	
+	//验证商品信息，更新商品信息
 	@RequestMapping(value="/{pid}/updateProduct")
 	public String updateProduct(@PathVariable Integer pid,Double price,Integer stock,Product product,MultipartFile pic,HttpServletRequest request){
 		Seller seller = (Seller)request.getSession().getAttribute("seller");
@@ -228,12 +244,14 @@ public class ProductController {
 		return "redirect:/seller/"+1+"/sellerindex";
 	}
 	
+	//下架商品
 	@RequestMapping(value="/{pid}/deleteProduct")
 	public String deleteProduct(@PathVariable("pid") Integer pid){
 		productService.deleteProduct(pid);
 		return "redirect:/seller/"+1+"/sellerindex";
 	}
 	
+	//前往添加商品页面
 	@RequestMapping(value="/toAddProduct")
 	public String toAddProduct(HttpServletRequest request){
 		Seller seller = (Seller)request.getSession().getAttribute("seller");
@@ -248,6 +266,7 @@ public class ProductController {
 		}
 	}
 	
+	//验证商品信息，添加商品
 	@RequestMapping(value="/addProduct")
 	public String addProduct(Product product,MultipartFile pic,HttpServletRequest request){
 		if(product == null){

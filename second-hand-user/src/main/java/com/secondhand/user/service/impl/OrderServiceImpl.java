@@ -197,4 +197,10 @@ public class OrderServiceImpl implements OrderService {
 	public void updateSmOrderState(String soid, Integer state) {
 		smOrderDao.changeStateBySoid(soid, state);
 	}
+
+	@Override
+	public Receiver findReceiverBySoid(String soid) {
+		Receiver receiver = smOrderDao.findReceiverBySoid(soid);
+		return receiver;
+	}
 }

@@ -19,6 +19,11 @@ import com.secondhand.user.exception.UpdateException;
 import com.secondhand.user.service.ProductService;
 import com.secondhand.user.service.SellerService;
 
+/**
+ * 卖家controller
+ * @author kid_way
+ *
+ */
 @Controller
 @RequestMapping(value="/seller")
 public class SellerController {
@@ -30,10 +35,13 @@ public class SellerController {
 	@Autowired
 	private ProductService productService;
 	
+	//前往卖家登录页面
 	@RequestMapping(value="/login")
 	public String login(){
 		return "seller/login";
 	}
+
+	//验证卖家登录信息，验证通过则前往卖家的闲置首页，否则返回登录页面
 	@RequestMapping(value="/toLogin")
 	public String toLogin(String sname,String password,HttpServletRequest request){
 		if(sname==null||sname.trim()==""){
@@ -53,11 +61,13 @@ public class SellerController {
 		}
 	}
 	
+	//前往注册页面
 	@RequestMapping(value="/regist")
 	public String regist(){
 		return "seller/regist";
 	}
 	
+	//验证卖家注册信息，注册通过则前往登录页面，否则返回注册页面
 	@RequestMapping(value="/toRegist",method=RequestMethod.POST)
 	public String toRegist(Seller seller,HttpServletRequest request){
 		if(seller.getSname()==null||seller.getSname().trim()==""){
@@ -85,11 +95,13 @@ public class SellerController {
 		}
 	}
 	
+	//前往更改卖家个人信息页面
 	@RequestMapping(value="/toUpdateSeller")
 	public String toUpdateSeller(HttpServletRequest request){
 		return "seller/update";
 	}
 	
+	//更新卖家个人信息
 	@RequestMapping(value="/update")
 	public String update(Seller seller,HttpServletRequest request){
 		Seller sessionSeller = (Seller)request.getSession().getAttribute("seller");
@@ -125,6 +137,7 @@ public class SellerController {
 		}
 	}
 	
+	//查询卖家的所有闲置并返回卖家首页
 	@RequestMapping(value="/{page}/sellerindex")
 	public String toSellerIndex(@PathVariable("page") Integer page,HttpServletRequest request){
 		Seller seller = (Seller)request.getSession().getAttribute("seller");
@@ -139,6 +152,7 @@ public class SellerController {
 		}
 	}
 	
+	//卖家退出登录
 	@RequestMapping(value="/quit")
 	public String quit(HttpServletRequest request){
 		request.getSession().removeAttribute("seller");

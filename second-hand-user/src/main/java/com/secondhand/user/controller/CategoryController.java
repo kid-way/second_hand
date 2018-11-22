@@ -18,6 +18,11 @@ import com.secondhand.user.entity.FirstCategory;
 import com.secondhand.user.entity.SecondCategory;
 import com.secondhand.user.service.CategoryService;
 
+/**
+ * 商品分类controller
+ * @author kid_way
+ *
+ */
 @Controller
 public class CategoryController {
 	
@@ -26,6 +31,7 @@ public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
 	
+	//获取所有的一级分类，同时获取一级分类中的二级分类list和商品list，把这些都包在一级分类list中，传到主页。
 	@RequestMapping(value="/index")
 	public String index(Model model){
 		List<FirstCategory> list = categoryService.findAllCategory();
@@ -33,6 +39,7 @@ public class CategoryController {
 		return "index";
 	}
 	
+	//类别级联用ajax将一级分类对应的二级分类返回
 	@RequestMapping(value="/{fcid}/getSecondCategory",
 			method = RequestMethod.POST,
 			produces={"application/json;charset=UTF-8"})

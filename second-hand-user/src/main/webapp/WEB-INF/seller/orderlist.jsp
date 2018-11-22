@@ -36,7 +36,7 @@
 						<td>${smOrder.soid }</td>
 						<td><img src="<c:url value='/resources/images/${smOrder.item.product.apicname }'></c:url>" width="50px" height="50px"><span>${smOrder.item.product.pname }</span></td>
 						<td>${smOrder.item.count }</td>
-						<td><a href="<c:url value='/findBuyMessage'></c:url>">${smOrder.order.user.username }</a></td>
+						<td><a href="<c:url value='/${smOrder.soid }/findBuyMessage'></c:url>">${smOrder.order.user.username }</a></td>
 						<td>
 							<c:choose>
 								<c:when test="${smOrder.state==1 }">

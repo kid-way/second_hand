@@ -24,23 +24,28 @@ import com.secondhand.user.service.ItemService;
 import com.secondhand.user.service.ProductService;
 import com.secondhand.user.util.TransformUtil;
 
+/**
+ * 条目conrtoller
+ * @author kid_way
+ *
+ */
 @Controller
 public class ItemController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	private ItemService itemService;
 	
 	@Autowired
 	private ProductService productService;
 	
+	//点击添加到购物车，先验证用户是否已登录，未登录返回登录页面，已登录就生成条目和购物车，将uid和条目id添加到购物车中
 	@RequestMapping(value="/addToBuyCar",method=RequestMethod.POST)
-	public String addToBuyCar(Integer pid,HttpServletRequest request,Integer count){
+	public String addToBuyCar(Integer pid,HttpServletRequest request,Integer count, Double price){
 		User user = (User)request.getSession().getAttribute("user");
 		if(user == null){
 			return "redirect:/login";
 		}else{
-			Product product = productService.findProductByPid(pid);
-			double price = product.getPrice();
 			double subtotal = count*price;
 			Item item = new Item();
 			String iid = UUID.randomUUID().toString().replace("-", "");
@@ -56,6 +61,7 @@ public class ItemController {
 		}
 	}
 	
+	//判断用户是否已登录，通过uid查询用户在购物车中添加的条目
 	@RequestMapping(value="/buycar")
 	public String buycar(HttpServletRequest request){
 		User user = (User)request.getSession().getAttribute("user");
@@ -69,18 +75,21 @@ public class ItemController {
 		}
 	}
 	
+	//移除购物车中的商品
 	@RequestMapping(value="/{iid}/deleteItem")
 	public String deleteItem(@PathVariable("iid")String iid){
 		itemService.deleteItem(iid);
 		return "forward:/buycar";
 	}
 	
+	//批量移除购物车中的商品
 	@RequestMapping(value="/deleteItems",method=RequestMethod.POST)
 	public String deleteItems(@RequestParam("iid")String[] iid,Model model){
 			itemService.deleteItems(iid);
 			return "forward:/buycar";
 		}
 	
+	//通过条目id数组，获取条目list，并生成条目包装类
 	@RequestMapping(value="/jiesuan",method=RequestMethod.POST)
 	public String jiesuan(@RequestParam("iid")String[] iid,Model model){
 		ItemDto itemDto = itemService.jiesuan(iid);

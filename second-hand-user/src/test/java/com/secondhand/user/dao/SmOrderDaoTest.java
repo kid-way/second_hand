@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.secondhand.user.entity.Receiver;
 import com.secondhand.user.entity.SmOrder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -40,4 +41,9 @@ public class SmOrderDaoTest {
 		}
 	}
 
+	@Test
+	public void testFindRecieverBySoid(){
+		Receiver receiver = smOrderDao.findReceiverBySoid("03f7d11804004065b3494db8f6722de7");
+		logger.info("receiver={}",receiver);
+	}
 }

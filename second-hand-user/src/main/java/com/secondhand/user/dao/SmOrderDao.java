@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.secondhand.user.entity.Receiver;
 import com.secondhand.user.entity.SmOrder;
 
 public interface SmOrderDao {
@@ -48,5 +49,7 @@ public interface SmOrderDao {
 	 * @return
 	 */
 	public List<SmOrder> findSmOrdersByState(@Param("sid") Integer sid,@Param("state") Integer state);
+
+	public Receiver findReceiverBySoid(String soid);
 	
 }
